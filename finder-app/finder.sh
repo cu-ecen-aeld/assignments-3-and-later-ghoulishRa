@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 if [ $# -ne 2 ]; then
-    echo "Incorrect number of arguments"
+    echo "Two arguments are needed"
     exit 1
 fi
 
@@ -17,6 +17,6 @@ fi
 
 num_files=$(find "$filesdir" -type f | wc -l)
 
-num_matches=$(grep -r "$searchstr" "$filesdir" | wc -l)
+num_matches=$(grep -rIs "$searchstr" "$filesdir" | wc -l)
 
 echo "The number of files are $num_files and the number of matching lines are $num_matches"

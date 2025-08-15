@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Incorrect number of arguments"
+    echo "Two argumemts are needed"
     exit 1
 fi
 
