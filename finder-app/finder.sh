@@ -1,7 +1,7 @@
 #!/bin/bash 
 
 if [ $# -ne 2 ]; then
-    echo "pasa dos argumentoooooos"
+    echo "Incorrect number of arguments"
     exit 1
 fi
 
@@ -11,7 +11,7 @@ searchstr=$2
 
 
 if [ ! -d "$filesdir" ]; then
-    echo "Y pasa que: '$filesdir' no es un directorio valido"
+    echo "Error: '$filesdir' is not a valid directory"
     exit 1
 fi
 

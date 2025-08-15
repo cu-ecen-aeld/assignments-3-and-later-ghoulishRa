@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "pasa dos argumentoooooos"
+    echo "Incorrect number of arguments"
     exit 1
 fi
 
@@ -13,6 +13,6 @@ mkdir -p "$(dirname "$writefile")"
 echo "$writestr" > "$writefile"
 
 if [ $? -ne 0 ]; then
-    echo "Error: No se creo tu fichero"
+    echo "Error: Directory not created"
     exit 1
 fi
