@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -ne 2 ]; then
-    echo "Two argumemts are needed"
+    echo "Two arguments are needed"
     exit 1
 fi
 
@@ -13,6 +13,6 @@ mkdir -p "$(dirname "$writefile")"
 echo "$writestr" > "$writefile"
 
 if [ $? -ne 0 ]; then
-    echo "Error: Directory not created"
+    echo "Error: File could not be created"
     exit 1
 fi
