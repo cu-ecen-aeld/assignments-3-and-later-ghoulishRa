@@ -10,6 +10,6 @@ Supported LTO compression algorithms: zlib
 gcc version 13.3.1 20240614 (Arm GNU Toolchain 13.3.Rel1 (Build arm-13.24)) 
 
 
-# Sysroot path #
+# Sysroot path # 
 
 /home/israamaciaas/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-linux-gnu/bin/../aarch64-none-linux-gnu/libc
