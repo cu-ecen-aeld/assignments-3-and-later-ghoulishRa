@@ -16,8 +16,13 @@ bool do_system(const char *cmd)
  *   and return a boolean true if the system() call completed with success
  *   or false() if it returned a failure
 */
+    int result = system(cmd);
 
-    return true;
+    if (result == -1){
+        return false;
+    }
+
+    return result == 0;
 }
 
 /**
@@ -47,7 +52,7 @@ bool do_exec(int count, ...)
     command[count] = NULL;
     // this line is to avoid a compile warning before your implementation is complete
     // and may be removed
-    command[count] = command[count];
+    //command[count] = command[count];
 
 /*
  * TODO:
@@ -58,10 +63,28 @@ bool do_exec(int count, ...)
  *   as second argument to the execv() command.
  *
 */
-
     va_end(args);
 
-    return true;
+
+    int pid = fork();
+    if (pid < 0){
+        perror("fork");
+        return false;
+    }
+    else if (pid == 0){
+        execv(command[0], command);
+        perror("execv");
+        _exit(1);
+
+    }
+    else{
+        int status;
+        wait(&status);
+        return (status & 0xFF) == 0;
+    }
+
+
+
 }
 
 /**
@@ -80,9 +103,38 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
         command[i] = va_arg(args, char *);
     }
     command[count] = NULL;
+
+    va_end(args);
+
+    int pid = fork();
+    if (pid < 0){
+        perror("fork");
+        return false;
+    }
+    else if( pid == 0){
+        int fd = open(outputfile, 0101, 0644);
+        if (fd < 0){
+            perror("open");
+            _exit(1);
+        }
+        if (dup2(fd, 1) < 0){
+            perror("dup2");
+            _exit(1);
+        }
+        close(fd);
+
+        execv(command[0], command);
+        perror("execv");
+        _exit(1);
+    }
+    else{
+        int status;
+        wait(&status);
+        return (status & 0xFF) == 0;
+    }
     // this line is to avoid a compile warning before your implementation is complete
     // and may be removed
-    command[count] = command[count];
+    //command[count] = command[count];
 
 
 /*
@@ -93,7 +145,4 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
  *
 */
 
-    va_end(args);
-
-    return true;
 }
