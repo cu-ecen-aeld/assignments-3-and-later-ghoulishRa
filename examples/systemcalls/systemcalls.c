@@ -63,29 +63,34 @@ bool do_exec(int count, ...)
  *   as second argument to the execv() command.
  *
 */
-    va_end(args);
-
+    
 
     int pid = fork();
-    if (pid < 0){
+    if (pid == -1){
         perror("fork");
+        va_end(args);
         return false;
     }
-    else if (pid == 0){
+    if (pid == 0){
         execv(command[0], command);
         perror("execv");
         _exit(1);
 
     }
-    else{
-        int status;
-        wait(&status);
-        return (status & 0xFF) == 0;
+    // parent process
+    int status;
+    if (waitpid(pid, &status, 0) == -1){
+        perror("waitpid");
+        va_end(args);
+        return false;
     }
 
+    va_end(args);
 
-
+    return (WIFEXITED(status) && WEXITSTATUS(status) == 0);
 }
+
+
 
 /**
 * @param outputfile - The full path to the file to write with command output.
